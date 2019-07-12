@@ -2,7 +2,7 @@
 
 
 
-Finds README template and creates README.md for node modules using any template engine as easy as possible.
+Creates README.md for node modules using any template engine as easy as possible.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -26,17 +26,11 @@ Finds README template and creates README.md for node modules using any template 
 
 # Usage
 
-- Create a tempate file.
-
-```
-$ echo "# {{ package.name }}" >> README.md
-```
-
-- Create `README.md` from the template. (**Beware:** Overwrites `README.md`)
-
 ```bash
 $ npx readmeasy
 ```
+
+This command creates `README.md` from template. It creates template file too if it does not exists. (**Beware:** Overwrites `README.md`)
 
 # Details
 
