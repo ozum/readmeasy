@@ -1,0 +1,7 @@
+# {{ package.label or package.name }}
+
+{{ allShields | safe }}
+
+{{ package.description }}
+
+{{ toc | safe }}
