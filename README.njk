@@ -6,7 +6,10 @@
 $ npx readmeasy
 ```
 
-This command creates `README.md` from template (`README.njk`, `README.hbs` etc.). If template does not exists, also creates `README.njk` too. (**Beware:** Overwrites `README.md`)
+Above command:
+- creates `README.md` from template (`README.njk`, `README.hbs` etc.),
+- if template does not exists, also creates `README.njk`,
+- if template is created and there is a `README.md`, copies `README.md`'s content to template.
 
 # Details
 
@@ -61,7 +64,7 @@ Prints all shields (badges) read from `package.json`. Uses [badges](https://www.
 
 | Shield                                                          | Example                                                                                                                          | Description                                                                                                                                              |
 | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| All shileds from [badges](https://www.npmjs.com/package/badges) |                                                                                                                                  | See it's details [here](https://www.npmjs.com/package/badges)                                                                                            |
+| All shileds from [badges](https://www.npmjs.com/package/badges) |                                                                                                                                  | See its details [here](https://www.npmjs.com/package/badges)                                                                                            |
 | conventionalcommits                                             | [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org) | [Conventional Commits](https://www.conventionalcommits.org) shield.                                                                                      |
 | commitizen                                                      | [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)  | Adds Commitizen-friendly badge described [here](https://github.com/commitizen/cz-cli#congratulations-your-repo-is-commitizen-friendly-time-to-flaunt-it) |
 
@@ -107,7 +110,7 @@ Implements the library [change-case](https://github.com/blakeembrey/change-case)
 
 Available types are `camel`, `constant`, `dot`, `header`, `hyphen`, `isLower`, `isUpper`, `kebab`, `lower`, `lcFirst`, `no`, `param`, `pascal`, `path`, `sentence`, `snake`, `swap`, `title`, `upper`, `ucFirst`.
 
-See it's documentation for details.
+See its documentation for details.
 
 ```nunjucks
 {{ '{{ "pencil" | changeCase("title") }}' | safe }} outputs Pencil

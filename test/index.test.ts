@@ -2,7 +2,7 @@ import { join } from "path";
 import fs, { existsSync } from "fs";
 import createReadMe from "../src/index";
 
-const { readFile, unlink } = fs.promises;
+const { readFile, unlink, writeFile } = fs.promises;
 const read = (file: string): Promise<string> => readFile(join(__dirname, "test-helper", file), { encoding: "utf8" });
 const dir = {
   njk: join(__dirname, "test-helper/nunjucks"),
@@ -10,7 +10,12 @@ const dir = {
   mixed: join(__dirname, "test-helper/mixed"),
   mustache: join(__dirname, "test-helper/mustache"),
   none: join(__dirname, "test-helper/none"),
+  noneWithReadMe: join(__dirname, "test-helper/none-with-readme"),
 };
+
+beforeAll(async () => {
+  await writeFile(join(dir.noneWithReadMe, "readme.md"), "OLD README CONTENT\n");
+});
 
 afterAll(async () => {
   return Promise.all([
@@ -20,6 +25,8 @@ afterAll(async () => {
     unlink(join(dir.mixed, "README.md")),
     unlink(join(dir.none, "README.md")),
     unlink(join(dir.none, "README.njk")),
+    unlink(join(dir.noneWithReadMe, "README.njk")),
+    unlink(join(dir.noneWithReadMe, "README.md")),
   ]);
 });
 
@@ -66,6 +73,13 @@ describe("createRadMe()", () => {
     await createReadMe({ dir: dir.none });
     const expected = await read("none/expected-readme.txt");
     const result = await read("none/README.md");
+    expect(result).toBe(expected);
+  });
+
+  it("should create template file if not exists and copy old readme file's content to template file", async () => {
+    await createReadMe({ dir: dir.noneWithReadMe });
+    const expected = await read("none-with-readme/expected-readme.txt");
+    const result = await read("none-with-readme/README.md");
     expect(result).toBe(expected);
   });
 });
