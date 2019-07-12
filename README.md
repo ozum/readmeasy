@@ -30,7 +30,7 @@ Creates README.md for node modules using any template engine as easy as possible
 $ npx readmeasy
 ```
 
-This command creates `README.md` from template. It creates template file too, if it does not exists. (**Beware:** Overwrites `README.md`)
+This command creates `README.md` from template (`README.njk`, `README.hbs` etc.). If template does not exists, also creates `README.njk` too. (**Beware:** Overwrites `README.md`)
 
 # Details
 
