@@ -1,12 +1,9 @@
 # readmeasy
 
-
-
 Creates README.md for node modules using any template engine as easy as possible.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 
 - [Usage](#usage)
 - [CLI Options](#cli-options)
@@ -24,14 +21,23 @@ Creates README.md for node modules using any template engine as easy as possible
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
 # Usage
+
+- Create a README template (`README.njk`, `README.hbs`, etc.)
+- Execute `readmeasy`
+
+```bash
+$ readmeasy
+```
+
+or
 
 ```bash
 $ npx readmeasy
 ```
 
 Above command:
+
 - creates `README.md` from template (`README.njk`, `README.hbs` etc.),
 - if template does not exists, also creates `README.njk`,
 - if template is created and there is a `README.md`, copies `README.md`'s content to template.
@@ -65,8 +71,8 @@ Partials are sub template files which can be included in other templates.
 
 **Example:**
 
-| Engine     | Syntax                                             |
-| ---------- | -------------------------------------------------- |
+| Engine     | Syntax                              |
+| ---------- | ----------------------------------- |
 | Handlebars | `{{> module-header }}`              |
 | Nunjucks   | `{% include "module-header.njk" %}` |
 
@@ -102,7 +108,7 @@ Prints all shields (badges) read from `package.json`. Uses [badges](https://www.
 
 | Shield                                                          | Example                                                                                                                          | Description                                                                                                                                              |
 | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| All shileds from [badges](https://www.npmjs.com/package/badges) |                                                                                                                                  | See its details [here](https://www.npmjs.com/package/badges)                                                                                            |
+| All shileds from [badges](https://www.npmjs.com/package/badges) |                                                                                                                                  | See its details [here](https://www.npmjs.com/package/badges)                                                                                             |
 | conventionalcommits                                             | [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org) | [Conventional Commits](https://www.conventionalcommits.org) shield.                                                                                      |
 | commitizen                                                      | [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)  | Adds Commitizen-friendly badge described [here](https://github.com/commitizen/cz-cli#congratulations-your-repo-is-commitizen-friendly-time-to-flaunt-it) |
 
