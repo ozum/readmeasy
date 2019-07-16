@@ -26,7 +26,9 @@ export default async function createReadMe(options: CreateReadMeOptions = {}): P
   let rendered = await render({
     ...options,
     template: readmeTemplate,
-    partialDirs: advancedSupportedEngines.has(engine) ? [join(__dirname, "partials", engine), ...arrify(options.partialDirs)] : [],
+    partialDirs: advancedSupportedEngines.has(engine)
+      ? [join(__dirname, "../module-files/partials", engine), ...arrify(options.partialDirs)]
+      : [],
     contextFiles: options.contextFiles,
     rootContextFiles: options.rootContextFiles,
     context: { toc: TOC_TAG, allShields: shields(packageJson), package: packageJson },
@@ -38,7 +40,7 @@ export default async function createReadMe(options: CreateReadMeOptions = {}): P
   if (rendered.includes(TOC_TAG)) {
     const docTocResult = transform(rendered, "github.com", 3, undefined, true);
     if (docTocResult.transformed) {
-      rendered = transform(rendered, "github.com", 3, undefined, true).data;
+      rendered = docTocResult.data;
     }
   }
 
