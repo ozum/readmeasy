@@ -1,6 +1,6 @@
 {
   "name": "readmeasy",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Creates README.md for node modules using any template engine as easy as possible.",
   "keywords": [
     "README",
