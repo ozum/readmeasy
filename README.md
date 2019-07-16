@@ -9,6 +9,7 @@ Creates README.md for node modules using any template engine as easy as possible
 
 
 - [Usage](#usage)
+- [CLI Options](#cli-options)
 - [Details](#details)
   - [Partials](#partials)
     - [module-headers](#module-headers)
@@ -34,6 +35,19 @@ Above command:
 - creates `README.md` from template (`README.njk`, `README.hbs` etc.),
 - if template does not exists, also creates `README.njk`,
 - if template is created and there is a `README.md`, copies `README.md`'s content to template.
+
+# CLI Options
+
+```
+--template-extension                    - File extension of the template.
+--context-files <paths>                 - js, ts, JSON5 or YAML files to get data to be passed to template under a key same as file name.
+--root-context-files                    - js, ts, JSON5 or YAML files to get data to be passed to template.
+--partial-dirs <paths csv>              - Paths of directories which contains partial files.
+--function-files <paths csv>            - Files to get filter/helper functions prefixed with file name. i.e "uc()" func in "path/helper.js" becomes "helperUc" helper/filter.
+--root-function-files <paths csv>       - Files to get filter/helper functions prefixed with file name. i.e "uc()" func in "path/helper.js" becomes "uc" helper/filter.
+--engine <engine name>                  - Template engine to be used. Supports engines supported by consolidate (https://www.npmjs.com/package/consolidate).
+--debug                                 - Print stack trace in errors.
+```
 
 # Details
 
