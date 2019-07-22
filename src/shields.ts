@@ -18,5 +18,5 @@ function badgesConfig(packageJson: Record<string, any>): { homepage: string; npm
 export default function shields(packageJson: Record<string, any>): string {
   const config = badgesConfig(packageJson);
   const requestedShields: string[] = packageJson.shields || [];
-  return requestedShields.map(shieldName => additionalShields[shieldName] || badges.renderBadges([shieldName], config)).join("\n");
+  return requestedShields.map(shieldName => additionalShields[shieldName] || badges.renderBadges([shieldName], config)).join(" ");
 }
