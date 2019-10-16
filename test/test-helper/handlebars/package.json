@@ -3,6 +3,11 @@
   "description": "Helps tests",
   "shields": [
     "conventionalcommits",
-    "nodeico"
+    "nodeico",
+    {
+      "name": "commitizen",
+      "image": "https://img.shields.io/badge/commitizen-friendly-brightgreen.svg",
+      "url": "http://commitizen.github.io/cz-cli/"
+    }
   ]
 }
