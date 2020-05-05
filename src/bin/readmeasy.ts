@@ -4,7 +4,7 @@ import meow, { Options as meowOptions } from "meow";
 import { resolve } from "path";
 import createReadMe from "../index";
 
-interface Result extends meow.Result {
+interface Result extends meow.Result<any> {
   flags: {
     templateExtension: string;
     contextFiles: string;
@@ -18,7 +18,7 @@ interface Result extends meow.Result {
   };
 }
 
-const FLAGS: meowOptions["flags"] = {
+const FLAGS: meowOptions<any>["flags"] = {
   templateExtension: { type: "string" },
   contextFiles: { type: "string", default: "" },
   rootContextFiles: { type: "string", default: "" },
@@ -56,7 +56,7 @@ Examples
  * @returns array of absolute paths converted from relative to cwd().
  */
 function splitPaths(pathsCSV: string): string[] {
-  return pathsCSV ? pathsCSV.split(/\s*,\s*/).map(f => resolve(f)) : [];
+  return pathsCSV ? pathsCSV.split(/\s*,\s*/).map((f) => resolve(f)) : [];
 }
 
 async function measy(): Promise<void> {
@@ -72,7 +72,7 @@ async function measy(): Promise<void> {
   };
 
   try {
-    const unknownOption = Object.keys(flags).find(key => FLAGS && !FLAGS[key]);
+    const unknownOption = Object.keys(flags).find((key) => FLAGS && !FLAGS[key]);
     if (unknownOption) {
       throw new Error(`Unknown option '${unknownOption}'`);
     }

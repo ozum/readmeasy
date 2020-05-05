@@ -30,13 +30,13 @@ export async function readPackageJson(dir: string): Promise<Record<string, any>>
 
 export async function findOrCreateTemplateFile(dir: string): Promise<string> {
   const filesInDir = await readdir(dir);
-  const readMeFiles = filesInDir.filter(file => basename(file, extname(file)).toLowerCase() === "readme");
-  const templateFiles = readMeFiles.filter(file => extname(file) !== ".md");
+  const readMeFiles = filesInDir.filter((file) => basename(file, extname(file)).toLowerCase() === "readme");
+  const templateFiles = readMeFiles.filter((file) => extname(file) !== ".md");
 
-  const templateFile = templateFiles.find(file => advancedSupportedEngines.has(engineOfExtension(extname(file)))) || templateFiles[0];
+  const templateFile = templateFiles.find((file) => advancedSupportedEngines.has(engineOfExtension(extname(file)))) || templateFiles[0];
 
   if (!templateFile) {
-    const readMeFile = readMeFiles.find(file => extname(file) === ".md");
+    const readMeFile = readMeFiles.find((file) => extname(file) === ".md");
     const oldReadMeContent = readMeFile ? await readFile(join(dir, "README.md"), { encoding: "utf8" }) : "";
     const content = readMeFile
       ? `{% include "module-header" %}\n\n${oldReadMeContent}`

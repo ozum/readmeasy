@@ -1,4 +1,35 @@
-import changeCaseLib from "change-case";
+import * as changeCaseLib from "change-case";
+import { titleCase } from "title-case";
+
+const caseMethods: Record<CaseMethodName, any> = { ...changeCaseLib, titleCase };
+
+type shortCaseMethodName =
+  | "camel"
+  | "capital"
+  | "constant"
+  | "dot"
+  | "header"
+  | "no"
+  | "param"
+  | "pascal"
+  | "path"
+  | "sentence"
+  | "snake"
+  | "title";
+
+type CaseMethodName =
+  | "camelCase"
+  | "capitalCase"
+  | "constantCase"
+  | "dotCase"
+  | "headerCase"
+  | "noCase"
+  | "paramCase"
+  | "pascalCase"
+  | "pathCase"
+  | "sentenceCase"
+  | "snakeCase"
+  | "titleCase";
 
 /**
  * Implements the library [change-case](https://github.com/blakeembrey/change-case).
@@ -9,8 +40,9 @@ import changeCaseLib from "change-case";
  * @example
  * changeCase("camelCase", "test string"); // testString
  */
-export function changeCase(string: string, to: keyof typeof changeCaseLib): string {
-  return changeCaseLib[to](string) as string;
+export function changeCase(string: string, to: shortCaseMethodName | CaseMethodName): string {
+  const method = (to.endsWith("Case") ? to : `${to}Case`) as CaseMethodName;
+  return caseMethods[method](string) as string;
 }
 
 /**
@@ -24,7 +56,7 @@ export function changeCase(string: string, to: keyof typeof changeCaseLib): stri
  * // --abc
  * // --abc
  */
-export function prefixLines(string: string, replacer: string = ""): string {
+export function prefixLines(string: string, replacer = ""): string {
   return string ? replacer + string.replace(/[\r\n]/g, `$&${replacer}`) : "";
 }
 
@@ -41,5 +73,5 @@ export function prefixLines(string: string, replacer: string = ""): string {
  * {{ package.label or package.name }}
  */
 export function firstAvailable(...input: any[]): any {
-  return input.find(candidate => candidate !== undefined && candidate !== "");
+  return input.find((candidate) => candidate !== undefined && candidate !== "");
 }

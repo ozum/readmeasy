@@ -1,8 +1,7 @@
 import { join } from "path";
-import fs, { existsSync } from "fs";
+import { readFile, remove, writeFile, existsSync } from "fs-extra";
 import createReadMe from "../src/index";
 
-const { readFile, unlink, writeFile } = fs.promises;
 const read = (file: string): Promise<string> => readFile(join(__dirname, "test-helper", file), { encoding: "utf8" });
 const dir = {
   njk: join(__dirname, "test-helper/nunjucks"),
@@ -19,14 +18,14 @@ beforeAll(async () => {
 
 afterAll(async () => {
   return Promise.all([
-    unlink(join(dir.njk, "README.md")),
-    unlink(join(dir.hbs, "README.md")),
-    unlink(join(dir.mustache, "README.md")),
-    unlink(join(dir.mixed, "README.md")),
-    unlink(join(dir.none, "README.md")),
-    unlink(join(dir.none, "README.njk")),
-    unlink(join(dir.noneWithReadMe, "README.njk")),
-    unlink(join(dir.noneWithReadMe, "README.md")),
+    remove(join(dir.njk, "README.md")),
+    remove(join(dir.hbs, "README.md")),
+    remove(join(dir.mustache, "README.md")),
+    remove(join(dir.mixed, "README.md")),
+    remove(join(dir.none, "README.md")),
+    remove(join(dir.none, "README.njk")),
+    remove(join(dir.noneWithReadMe, "README.njk")),
+    remove(join(dir.noneWithReadMe, "README.md")),
   ]);
 });
 

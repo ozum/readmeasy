@@ -20,7 +20,7 @@ export default function shields(packageJson: Record<string, any>): string {
   const requestedShields: (string | Record<string, any>)[] = packageJson.shields || [];
   return requestedShields
     .map(
-      shield =>
+      (shield) =>
         (typeof shield === "object" ? additionalShields[shield.name] : additionalShields[shield]) || badges.renderBadges([shield], config)
     )
     .join(" ");
