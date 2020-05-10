@@ -1,8 +1,10 @@
 import * as changeCaseLib from "change-case";
 import { titleCase } from "title-case";
 
+/** @ignore */
 const caseMethods: Record<CaseMethodName, any> = { ...changeCaseLib, titleCase };
 
+/** @ignore */
 type shortCaseMethodName =
   | "camel"
   | "capital"
@@ -17,6 +19,7 @@ type shortCaseMethodName =
   | "snake"
   | "title";
 
+/** @ignore */
 type CaseMethodName =
   | "camelCase"
   | "capitalCase"
@@ -34,6 +37,7 @@ type CaseMethodName =
 /**
  * Implements the library [change-case](https://github.com/blakeembrey/change-case).
  *
+ * @ignore
  * @param to is shorthand or full name for the change-case function.
  * @param string is the string to modify.
  * @returns string with case changed.
@@ -48,6 +52,7 @@ export function changeCase(string: string, to: shortCaseMethodName | CaseMethodN
 /**
  * Prefixes a string to the beginning of each line in the first string
  *
+ * @ignore
  * @param string is the string to modify.
  * @param replacer is the string to prefix to each line.
  * @returns prefixed lines.
@@ -64,13 +69,14 @@ export function prefixLines(string: string, replacer = ""): string {
  * Returns first defined or non-empty input. This may be useful for `handlebars`, because it does not provide
  * short circuit operator like `nunjucks`
  *
+ * @ignore
  * @param input is list of inputs to check.
  * @example
  * // Handlebars:
- * {{ firstAvaialbale package.label package.name }}
+ * {{ '{{ firstAvaialbale package.label package.name }}' }}
  *
  * // Equals this in nunjucks
- * {{ package.label or package.name }}
+ * {{ '{{ package.label or package.name }}' }}
  */
 export function firstAvailable(...input: any[]): any {
   return input.find((candidate) => candidate !== undefined && candidate !== "");

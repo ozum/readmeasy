@@ -9,8 +9,10 @@ Creates README.md for node modules using any template engine as easy as possible
 
 
 - [Usage](#usage)
-- [CLI Options](#cli-options)
 - [Details](#details)
+  - [](#)
+- [CLI Options](#cli-options)
+- [Details](#details-1)
   - [Partials](#partials)
     - [module-headers](#module-headers)
   - [Context](#context)
@@ -21,29 +23,44 @@ Creates README.md for node modules using any template engine as easy as possible
     - [prefixLines(string: string, replacer: string = ""): string](#prefixlinesstring-string-replacer-string---string)
     - [changeCase(string: string, to: type): string](#changecasestring-string-to-type-string)
 - [Related Projects](#related-projects)
+- [API](#api)
+- [readmeasy](#readmeasy)
+  - [Functions](#functions)
+    - [createReadMe](#createreadme)
+    - [findOrCreateTemplateFile](#findorcreatetemplatefile)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 # Usage
 
-- Create a README template (`README.njk`, `README.hbs`, etc.)
-- Execute `readmeasy`
+**CLI**
 
-```bash
-$ readmeasy
-```
-
-or
+- First, create a README template (`README.njk`, `README.hbs`, etc.)
+- Next, execute `readmeasy`
 
 ```bash
 $ npx readmeasy
 ```
 
-Above command:
+**API**
+
+```ts
+import createReadMe, { findOrCreateTemplateFile };
+
+async function demo() {
+  await createReadMe();
+}
+
+```
+
+# Details
+
 - creates `README.md` from template (`README.njk`, `README.hbs` etc.),
 - if template does not exists, also creates `README.njk`,
 - if template is created and there is a `README.md`, copies `README.md`'s content to template.
+
+##
 
 # CLI Options
 
@@ -166,3 +183,60 @@ See its documentation for details.
 # Related Projects
 
 [measy](https://www.npmjs.com/package/measy) - Create files using any template engine as simple as possible. Just a template and a JSON/YAML file is enough.
+
+# API
+
+
+<a name="readmemd"></a>
+
+# readmeasy
+
+## Functions
+
+###  createReadMe
+
+▸ **createReadMe**(`options`: object): *Promise‹void›*
+
+*Defined in [src/index.ts:19](https://github.com/ozum/readmeasy/blob/060e5c2/src/index.ts#L19)*
+
+Creates README.md from REDAME template.
+
+**Parameters:**
+
+▪`Default value`  **options**: *object*= {}
+
+are the options.
+
+Name | Type | Description |
+------ | ------ | ------ |
+`contextFiles?` | string &#124; string[] | js, ts, JSON5 or YAML files to get data to be passed to template under a key same as file name. |
+`dir?` | undefined &#124; string | Directory to serach README template. |
+`engine?` | SupportedEngine | Template engine to be used. Supports engines supported by consolidate (https://www.npmjs.com/package/consolidate). Defaults to `partials`. |
+`functionFiles?` | string &#124; string[] | Files to get filter/helper functions prefixed with file name. i.e "uc()" func in "path/helper.js" becomes "helperUc" helper/filter. |
+`partialDirs?` | string &#124; string[] | Paths of directories which contains partial files. |
+`rootContextFiles?` | string &#124; string[] | js, ts, JSON5 or YAML files to get data to be passed to template. |
+`rootFunctionFiles?` | string &#124; string[] | Files to get filter/helper functions prefixed with file name. i.e "uc()" func in "path/helper.js" becomes "uc" helper/filter. |
+`templateExtension?` | undefined &#124; string | File extension of the template. |
+
+**Returns:** *Promise‹void›*
+
+___
+
+###  findOrCreateTemplateFile
+
+▸ **findOrCreateTemplateFile**(`dir`: string, `extension`: string): *Promise‹string›*
+
+*Defined in [src/utils.ts:38](https://github.com/ozum/readmeasy/blob/060e5c2/src/utils.ts#L38)*
+
+Finds or creates README template file and returns the file found or created path.
+
+**Parameters:**
+
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`dir` | string | - | is the directory to search README template for. |
+`extension` | string | "njk" | is the extension to be used if template file would be created. |
+
+**Returns:** *Promise‹string›*
+
+path of the README template.

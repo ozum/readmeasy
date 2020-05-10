@@ -1,14 +1,14 @@
-import fs from "fs";
 import { extname, basename, join } from "path";
 import { SupportedEngine, engineOfExtension } from "measy";
+import { promises as fs } from "fs";
 
-const { readFile, readdir, writeFile, unlink } = fs.promises;
-
+/** @ignore */
 export const advancedSupportedEngines: Set<SupportedEngine | undefined> = new Set(["handlebars", "nunjucks"]);
 
 /**
  * Makes given input array and returns it.
  *
+ * @ignore
  * @param input to construct array from
  * @returns created array.
  */
@@ -24,12 +24,19 @@ export function arrify<T>(input: T | T[] = []): T[] {
  */
 export async function readPackageJson(dir: string): Promise<Record<string, any>> {
   const jsonFile = join(dir, "package.json");
-  const content = await readFile(jsonFile, { encoding: "utf8" });
+  const content = await fs.readFile(jsonFile, { encoding: "utf8" });
   return JSON.parse(content);
 }
 
-export async function findOrCreateTemplateFile(dir: string): Promise<string> {
-  const filesInDir = await readdir(dir);
+/**
+ * Finds or creates README template file and returns the file found or created path.
+ *
+ * @param dir is the directory to search README template for.
+ * @param extension is the extension to be used if template file would be created.
+ * @returns path of the README template.
+ */
+export async function findOrCreateTemplateFile(dir: string, extension = "njk"): Promise<string> {
+  const filesInDir = await fs.readdir(dir);
   const readMeFiles = filesInDir.filter((file) => basename(file, extname(file)).toLowerCase() === "readme");
   const templateFiles = readMeFiles.filter((file) => extname(file) !== ".md");
 
@@ -37,18 +44,18 @@ export async function findOrCreateTemplateFile(dir: string): Promise<string> {
 
   if (!templateFile) {
     const readMeFile = readMeFiles.find((file) => extname(file) === ".md");
-    const oldReadMeContent = readMeFile ? await readFile(join(dir, "README.md"), { encoding: "utf8" }) : "";
+    const oldReadMeContent = readMeFile ? await fs.readFile(join(dir, "README.md"), { encoding: "utf8" }) : "";
     const content = readMeFile
       ? `{% include "module-header" %}\n\n${oldReadMeContent}`
       : '{% include "module-header" %}\n\n# Synopsis\n\n# Details\n\n# API\n\n# Contribution\n\n';
 
-    await writeFile(join(dir, "README.njk"), content);
+    await fs.writeFile(join(dir, `README.${extension}`), content);
 
     if (readMeFile) {
-      await unlink(join(dir, readMeFile));
+      await fs.unlink(join(dir, readMeFile));
     }
 
-    return join(dir, "README.njk");
+    return join(dir, `README.${extension}`);
   }
 
   return join(dir, templateFile);

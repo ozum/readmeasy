@@ -1,19 +1,42 @@
 /* eslint-disable no-console */
-import { render, isEngineSupported, engineOfExtension } from "measy";
+import { render, isEngineSupported, engineOfExtension, SupportedEngine } from "measy";
 import topPkgDir from "top-pkg-dir";
 import { join, extname } from "path";
-import fs from "fs";
+import { promises as fs } from "fs";
 import { findOrCreateTemplateFile, readPackageJson, arrify, advancedSupportedEngines } from "./utils";
 import shields from "./shields";
-import { CreateReadMeOptions } from "./types";
 
+/** @ignore */
 const transform = require("doctoc/lib/transform"); // eslint-disable-line @typescript-eslint/no-var-requires
 
-const { writeFile } = fs.promises;
-
+/** @ignore */
 const TOC_TAG = "<!-- START doctoc -->\n<!-- END doctoc -->";
 
-export default async function createReadMe(options: CreateReadMeOptions = {}): Promise<void> {
+/**
+ * Creates README.md from REDAME template.
+ * @param options are the options.
+ */
+export default async function createReadMe(
+  /* istanbul ignore next: Ignore default parameters. */
+  options: {
+    /** Directory to serach README template. */
+    dir?: string;
+    /** js, ts, JSON5 or YAML files to get data to be passed to template under a key same as file name. */
+    contextFiles?: string | string[];
+    /** js, ts, JSON5 or YAML files to get data to be passed to template. */
+    rootContextFiles?: string | string[];
+    /** Paths of directories which contains partial files. */
+    partialDirs?: string | string[];
+    /** Template engine to be used. Supports engines supported by consolidate (https://www.npmjs.com/package/consolidate). Defaults to `partials`. */
+    engine?: SupportedEngine;
+    /** Files to get filter/helper functions prefixed with file name. i.e "uc()" func in "path/helper.js" becomes "helperUc" helper/filter. */
+    functionFiles?: string | string[];
+    /** Files to get filter/helper functions prefixed with file name. i.e "uc()" func in "path/helper.js" becomes "uc" helper/filter. */
+    rootFunctionFiles?: string | string[];
+    /** File extension of the template. */
+    templateExtension?: string;
+  } = {}
+): Promise<void> {
   const dir = options.dir || (await topPkgDir());
   const readmeTemplate = options.templateExtension ? join(dir, `README.${options.templateExtension}`) : await findOrCreateTemplateFile(dir);
   const packageJson = await readPackageJson(dir);
@@ -27,7 +50,7 @@ export default async function createReadMe(options: CreateReadMeOptions = {}): P
     ...options,
     template: readmeTemplate,
     partialDirs: advancedSupportedEngines.has(engine)
-      ? [join(__dirname, "../module-files/partials", engine), ...arrify(options.partialDirs)]
+      ? [join(__dirname, "../module-files/partials", engine), ...arrify(options.partialDirs || "partials")]
       : [],
     contextFiles: options.contextFiles,
     rootContextFiles: options.rootContextFiles,
@@ -44,5 +67,7 @@ export default async function createReadMe(options: CreateReadMeOptions = {}): P
     }
   }
 
-  await writeFile(join(dir, "README.md"), rendered, { encoding: "utf8" });
+  await fs.writeFile(join(dir, "README.md"), rendered, { encoding: "utf8" });
 }
+
+export { findOrCreateTemplateFile };

@@ -1,6 +1,6 @@
 import { join } from "path";
-import { readFile, remove, writeFile, existsSync } from "fs-extra";
-import createReadMe from "../src/index";
+import { readFile, outputFile, existsSync, remove } from "fs-extra";
+import createReadMe, { findOrCreateTemplateFile } from "../src/index";
 
 const read = (file: string): Promise<string> => readFile(join(__dirname, "test-helper", file), { encoding: "utf8" });
 const dir = {
@@ -13,7 +13,7 @@ const dir = {
 };
 
 beforeAll(async () => {
-  await writeFile(join(dir.noneWithReadMe, "readme.md"), "OLD README CONTENT\n");
+  await outputFile(join(dir.noneWithReadMe, "readme.md"), "OLD README CONTENT\n");
 });
 
 afterAll(async () => {
@@ -30,12 +30,6 @@ afterAll(async () => {
 });
 
 describe("createRadMe()", () => {
-  it("should create README.md for this project", async () => {
-    await createReadMe();
-    const exists = existsSync(join(__dirname, "../README.md"));
-    expect(exists).toBe(true);
-  });
-
   it("should create README.md from template", async () => {
     await createReadMe({ dir: dir.hbs });
     const expected = await read("handlebars/expected-readme.txt");
@@ -80,5 +74,11 @@ describe("createRadMe()", () => {
     const expected = await read("none-with-readme/expected-readme.txt");
     const result = await read("none-with-readme/README.md");
     expect(result).toBe(expected);
+  });
+});
+
+describe("findOrCreateTemplateFile", () => {
+  it("should find README template", async () => {
+    expect(await findOrCreateTemplateFile(dir.njk)).toBe(join(dir.njk, "README.njk"));
   });
 });

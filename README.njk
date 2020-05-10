@@ -2,23 +2,33 @@
 
 # Usage
 
-- Create a README template (`README.njk`, `README.hbs`, etc.)
-- Execute `readmeasy`
+**CLI**
 
-```bash
-$ readmeasy
-```
-
-or
+- First, create a README template (`README.njk`, `README.hbs`, etc.)
+- Next, execute `readmeasy`
 
 ```bash
 $ npx readmeasy
 ```
 
-Above command:
+**API**
+
+```ts
+import createReadMe, { findOrCreateTemplateFile } from "readmeasy;
+
+async function demo() {
+  await createReadMe();
+}
+
+```
+
+# Details
+
 - creates `README.md` from template (`README.njk`, `README.hbs` etc.),
 - if template does not exists, also creates `README.njk`,
 - if template is created and there is a `README.md`, copies `README.md`'s content to template.
+
+##
 
 # CLI Options
 
@@ -141,3 +151,7 @@ See its documentation for details.
 # Related Projects
 
 [measy](https://www.npmjs.com/package/measy) - Create files using any template engine as simple as possible. Just a template and a JSON/YAML file is enough.
+
+# API
+
+{% include "api.md" %}

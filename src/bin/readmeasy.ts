@@ -4,6 +4,7 @@ import meow, { Options as meowOptions } from "meow";
 import { resolve } from "path";
 import createReadMe from "../index";
 
+/** @ignore */
 interface Result extends meow.Result<any> {
   flags: {
     templateExtension: string;
@@ -18,6 +19,7 @@ interface Result extends meow.Result<any> {
   };
 }
 
+/** @ignore */
 const FLAGS: meowOptions<any>["flags"] = {
   templateExtension: { type: "string" },
   contextFiles: { type: "string", default: "" },
@@ -30,6 +32,7 @@ const FLAGS: meowOptions<any>["flags"] = {
   silence: { type: "boolean" },
 };
 
+/** @ignore */
 const HELP = `
 Usage
   $ readmeasy
@@ -52,6 +55,7 @@ Examples
 /**
  * Splites CSV string of paths from CLI into array of absolute paths.
  *
+ * @ignore
  * @param pathsCSV is comma split values of paths to split.
  * @returns array of absolute paths converted from relative to cwd().
  */
@@ -59,6 +63,7 @@ function splitPaths(pathsCSV: string): string[] {
   return pathsCSV ? pathsCSV.split(/\s*,\s*/).map((f) => resolve(f)) : [];
 }
 
+/** @ignore */
 async function measy(): Promise<void> {
   const cli = meow(HELP, { flags: FLAGS }) as Result;
 
