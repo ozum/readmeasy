@@ -198,7 +198,7 @@ See its documentation for details.
 
 ▸ **createReadMe**(`options`: object): *Promise‹void›*
 
-*Defined in [src/index.ts:19](https://github.com/ozum/readmeasy/blob/43f08de/src/index.ts#L19)*
+*Defined in [src/index.ts:19](https://github.com/ozum/readmeasy/blob/3095a08/src/index.ts#L19)*
 
 Creates README.md from REDAME template.
 
@@ -211,6 +211,7 @@ are the options.
 Name | Type | Description |
 ------ | ------ | ------ |
 `contextFiles?` | string &#124; string[] | js, ts, JSON5 or YAML files to get data to be passed to template under a key same as file name. |
+`defaultContent?` | undefined &#124; string | Default content to create README template with. |
 `dir?` | undefined &#124; string | Directory to serach README template. |
 `engine?` | SupportedEngine | Template engine to be used. Supports engines supported by consolidate (https://www.npmjs.com/package/consolidate). Defaults to `partials`. |
 `functionFiles?` | string &#124; string[] | Files to get filter/helper functions prefixed with file name. i.e "uc()" func in "path/helper.js" becomes "helperUc" helper/filter. |
@@ -225,18 +226,21 @@ ___
 
 ###  findOrCreateTemplateFile
 
-▸ **findOrCreateTemplateFile**(`dir`: string, `extension`: string): *Promise‹string›*
+▸ **findOrCreateTemplateFile**(`__namedParameters`: object): *Promise‹string›*
 
-*Defined in [src/utils.ts:62](https://github.com/ozum/readmeasy/blob/43f08de/src/utils.ts#L62)*
+*Defined in [src/utils.ts:64](https://github.com/ozum/readmeasy/blob/3095a08/src/utils.ts#L64)*
 
 Finds or creates README template file and returns the file found or created path.
 
 **Parameters:**
 
+▪`Default value`  **__namedParameters**: *object*= {} as any
+
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`dir` | string | - | is the directory to search README template for. |
-`extension` | string | "njk" | is the extension to be used if template file would be created. |
+`defaultContent` | undefined &#124; string | - | is the default content to create README template with. |
+`dir` | undefined &#124; string | - | is the directory to search README template for. |
+`templateExtension` | string | "njk" | - |
 
 **Returns:** *Promise‹string›*
 
@@ -246,9 +250,9 @@ ___
 
 ###  findTemplateFile
 
-▸ **findTemplateFile**(`dir`: string): *Promise‹string | undefined›*
+▸ **findTemplateFile**(`dir?`: undefined | string): *Promise‹string | undefined›*
 
-*Defined in [src/utils.ts:50](https://github.com/ozum/readmeasy/blob/43f08de/src/utils.ts#L50)*
+*Defined in [src/utils.ts:51](https://github.com/ozum/readmeasy/blob/3095a08/src/utils.ts#L51)*
 
 Returns README template file by searching given directory for supported template extensions.
 If more than one found, returns first one.
@@ -257,8 +261,9 @@ If more than one found, returns first one.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`dir` | string | is the directory to search README template for. |
+`dir?` | undefined &#124; string | is the directory to search README template for. |
 
 **Returns:** *Promise‹string | undefined›*
 
 template file path.
+
