@@ -28,6 +28,7 @@ Creates README.md for node modules using any template engine as easy as possible
   - [Functions](#functions)
     - [createReadMe](#createreadme)
     - [findOrCreateTemplateFile](#findorcreatetemplatefile)
+    - [findTemplateFile](#findtemplatefile)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -46,7 +47,7 @@ $ npx readmeasy
 **API**
 
 ```ts
-import createReadMe, { findOrCreateTemplateFile } from "readmeasy;
+import createReadMe, { findOrCreateTemplateFile, findTemplateFile } from "readmeasy;
 
 async function demo() {
   await createReadMe();
@@ -197,7 +198,7 @@ See its documentation for details.
 
 ▸ **createReadMe**(`options`: object): *Promise‹void›*
 
-*Defined in [src/index.ts:19](https://github.com/ozum/readmeasy/blob/3bca501/src/index.ts#L19)*
+*Defined in [src/index.ts:19](https://github.com/ozum/readmeasy/blob/43f08de/src/index.ts#L19)*
 
 Creates README.md from REDAME template.
 
@@ -226,7 +227,7 @@ ___
 
 ▸ **findOrCreateTemplateFile**(`dir`: string, `extension`: string): *Promise‹string›*
 
-*Defined in [src/utils.ts:38](https://github.com/ozum/readmeasy/blob/3bca501/src/utils.ts#L38)*
+*Defined in [src/utils.ts:62](https://github.com/ozum/readmeasy/blob/43f08de/src/utils.ts#L62)*
 
 Finds or creates README template file and returns the file found or created path.
 
@@ -240,3 +241,24 @@ Name | Type | Default | Description |
 **Returns:** *Promise‹string›*
 
 path of the README template.
+
+___
+
+###  findTemplateFile
+
+▸ **findTemplateFile**(`dir`: string): *Promise‹string | undefined›*
+
+*Defined in [src/utils.ts:50](https://github.com/ozum/readmeasy/blob/43f08de/src/utils.ts#L50)*
+
+Returns README template file by searching given directory for supported template extensions.
+If more than one found, returns first one.
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`dir` | string | is the directory to search README template for. |
+
+**Returns:** *Promise‹string | undefined›*
+
+template file path.
