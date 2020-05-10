@@ -3,7 +3,7 @@ import { render, isEngineSupported, engineOfExtension, SupportedEngine } from "m
 import topPkgDir from "top-pkg-dir";
 import { join, extname } from "path";
 import { promises as fs } from "fs";
-import { findOrCreateTemplateFile, readPackageJson, arrify, advancedSupportedEngines } from "./utils";
+import { findOrCreateTemplateFile, readPackageJson, arrify, advancedSupportedEngines, findTemplateFile } from "./utils";
 import shields from "./shields";
 
 /** @ignore */
@@ -70,4 +70,4 @@ export default async function createReadMe(
   await fs.writeFile(join(dir, "README.md"), rendered, { encoding: "utf8" });
 }
 
-export { findOrCreateTemplateFile };
+export { findOrCreateTemplateFile, findTemplateFile };

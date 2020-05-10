@@ -29,6 +29,30 @@ export async function readPackageJson(dir: string): Promise<Record<string, any>>
 }
 
 /**
+ * Returns README templates file by searching given directory for supported template extensions.
+ *
+ * @ignore
+ * @param dir is the directory to search README templates for.
+ * @returns template file paths.
+ */
+async function findReadMeFiles(dir: string): Promise<string[]> {
+  const filesInDir = await fs.readdir(dir);
+  return filesInDir.filter((file) => basename(file, extname(file)).toLowerCase() === "readme");
+}
+
+/**
+ * Returns README template file by searching given directory for supported template extensions.
+ * If more than one found, returns first one.
+ *
+ * @param dir is the directory to search README template for.
+ * @returns template file path.
+ */
+export async function findTemplateFile(dir: string): Promise<string | undefined> {
+  const templateFiles = (await findReadMeFiles(dir)).filter((file) => extname(file) !== ".md");
+  return templateFiles.find((file) => advancedSupportedEngines.has(engineOfExtension(extname(file)))) || templateFiles[0];
+}
+
+/**
  * Finds or creates README template file and returns the file found or created path.
  *
  * @param dir is the directory to search README template for.
@@ -36,14 +60,10 @@ export async function readPackageJson(dir: string): Promise<Record<string, any>>
  * @returns path of the README template.
  */
 export async function findOrCreateTemplateFile(dir: string, extension = "njk"): Promise<string> {
-  const filesInDir = await fs.readdir(dir);
-  const readMeFiles = filesInDir.filter((file) => basename(file, extname(file)).toLowerCase() === "readme");
-  const templateFiles = readMeFiles.filter((file) => extname(file) !== ".md");
+  const templateFile = await findTemplateFile(dir);
 
-  const templateFile = templateFiles.find((file) => advancedSupportedEngines.has(engineOfExtension(extname(file)))) || templateFiles[0];
-
-  if (!templateFile) {
-    const readMeFile = readMeFiles.find((file) => extname(file) === ".md");
+  if (templateFile === undefined) {
+    const readMeFile = (await findReadMeFiles(dir)).find((file) => extname(file) === ".md");
     const oldReadMeContent = readMeFile ? await fs.readFile(join(dir, "README.md"), { encoding: "utf8" }) : "";
     const content = readMeFile
       ? `{% include "module-header" %}\n\n${oldReadMeContent}`
