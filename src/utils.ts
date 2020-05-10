@@ -57,25 +57,29 @@ export async function findTemplateFile(dir: string): Promise<string | undefined>
  *
  * @param dir is the directory to search README template for.
  * @param extension is the extension to be used if template file would be created.
+ * @param defaultContent is the default content to create README template with.
  * @returns path of the README template.
  */
-export async function findOrCreateTemplateFile(dir: string, extension = "njk"): Promise<string> {
+export async function findOrCreateTemplateFile(
+  /* istanbul ignore next: Ignore default parameters. */
+  { dir, templateExtension = "njk", defaultContent }: { dir: string; templateExtension?: string; defaultContent?: string } = {} as any
+): Promise<string> {
   const templateFile = await findTemplateFile(dir);
 
   if (templateFile === undefined) {
     const readMeFile = (await findReadMeFiles(dir)).find((file) => extname(file) === ".md");
     const oldReadMeContent = readMeFile ? await fs.readFile(join(dir, "README.md"), { encoding: "utf8" }) : "";
-    const content = readMeFile
-      ? `{% include "module-header" %}\n\n${oldReadMeContent}`
-      : '{% include "module-header" %}\n\n# Synopsis\n\n# Details\n\n# API\n\n# Contribution\n\n';
-
-    await fs.writeFile(join(dir, `README.${extension}`), content);
+    const content =
+      defaultContent && !oldReadMeContent
+        ? defaultContent
+        : `{% include "module-header" %}\n\n# Synopsis\n\n# Details\n\n<!-- usage -->\n\n<!-- commands -->\n\n${oldReadMeContent}\n\n# API\n\n# Contribution\n\n`;
+    await fs.writeFile(join(dir, `README.${templateExtension}`), content);
 
     if (readMeFile) {
       await fs.unlink(join(dir, readMeFile));
     }
 
-    return join(dir, `README.${extension}`);
+    return join(dir, `README.${templateExtension}`);
   }
 
   return join(dir, templateFile);

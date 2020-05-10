@@ -35,10 +35,14 @@ export default async function createReadMe(
     rootFunctionFiles?: string | string[];
     /** File extension of the template. */
     templateExtension?: string;
+    /** Default content to create README template with. */
+    defaultContent?: string;
   } = {}
 ): Promise<void> {
   const dir = options.dir || (await topPkgDir());
-  const readmeTemplate = options.templateExtension ? join(dir, `README.${options.templateExtension}`) : await findOrCreateTemplateFile(dir);
+  const readmeTemplate = options.templateExtension
+    ? join(dir, `README.${options.templateExtension}`)
+    : await findOrCreateTemplateFile({ dir, defaultContent: options.defaultContent, templateExtension: options.templateExtension });
   const packageJson = await readPackageJson(dir);
   const engine = options.engine || engineOfExtension(extname(readmeTemplate));
 

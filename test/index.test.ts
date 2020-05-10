@@ -9,6 +9,7 @@ const dir = {
   mixed: join(__dirname, "test-helper/mixed"),
   mustache: join(__dirname, "test-helper/mustache"),
   none: join(__dirname, "test-helper/none"),
+  noneWithDefault: join(__dirname, "test-helper/none-with-default"),
   noneWithReadMe: join(__dirname, "test-helper/none-with-readme"),
 };
 
@@ -24,6 +25,8 @@ afterAll(async () => {
     remove(join(dir.mixed, "README.md")),
     remove(join(dir.none, "README.md")),
     remove(join(dir.none, "README.njk")),
+    remove(join(dir.noneWithDefault, "README.njk")),
+    remove(join(dir.noneWithDefault, "README.md")),
     remove(join(dir.noneWithReadMe, "README.njk")),
     remove(join(dir.noneWithReadMe, "README.md")),
   ]);
@@ -69,6 +72,13 @@ describe("createRadMe()", () => {
     expect(result).toBe(expected);
   });
 
+  it("should create template file with given default content if not exists", async () => {
+    await createReadMe({ dir: dir.noneWithDefault, defaultContent: "DEFAULT CONTENT\n" });
+    const expected = await read("none-with-default/expected-readme.txt");
+    const result = await read("none-with-default/README.md");
+    expect(result).toBe(expected);
+  });
+
   it("should create template file if not exists and copy old readme file's content to template file", async () => {
     await createReadMe({ dir: dir.noneWithReadMe });
     const expected = await read("none-with-readme/expected-readme.txt");
@@ -79,6 +89,6 @@ describe("createRadMe()", () => {
 
 describe("findOrCreateTemplateFile", () => {
   it("should find README template", async () => {
-    expect(await findOrCreateTemplateFile(dir.njk)).toBe(join(dir.njk, "README.njk"));
+    expect(await findOrCreateTemplateFile({ dir: dir.njk })).toBe(join(dir.njk, "README.njk"));
   });
 });
