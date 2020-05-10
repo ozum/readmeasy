@@ -46,7 +46,7 @@ $ npx readmeasy
 **API**
 
 ```ts
-import createReadMe, { findOrCreateTemplateFile };
+import createReadMe, { findOrCreateTemplateFile } from "readmeasy;
 
 async function demo() {
   await createReadMe();
@@ -197,7 +197,7 @@ See its documentation for details.
 
 ▸ **createReadMe**(`options`: object): *Promise‹void›*
 
-*Defined in [src/index.ts:19](https://github.com/ozum/readmeasy/blob/060e5c2/src/index.ts#L19)*
+*Defined in [src/index.ts:19](https://github.com/ozum/readmeasy/blob/3bca501/src/index.ts#L19)*
 
 Creates README.md from REDAME template.
 
@@ -226,7 +226,7 @@ ___
 
 ▸ **findOrCreateTemplateFile**(`dir`: string, `extension`: string): *Promise‹string›*
 
-*Defined in [src/utils.ts:38](https://github.com/ozum/readmeasy/blob/060e5c2/src/utils.ts#L38)*
+*Defined in [src/utils.ts:38](https://github.com/ozum/readmeasy/blob/3bca501/src/utils.ts#L38)*
 
 Finds or creates README template file and returns the file found or created path.
 
