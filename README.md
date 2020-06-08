@@ -198,7 +198,7 @@ See its documentation for details.
 
 ▸ **createReadMe**(`options`: object): *Promise‹void›*
 
-*Defined in [src/index.ts:19](https://github.com/ozum/readmeasy/blob/3095a08/src/index.ts#L19)*
+*Defined in [src/index.ts:19](https://github.com/ozum/readmeasy/blob/30fddb9/src/index.ts#L19)*
 
 Creates README.md from REDAME template.
 
@@ -228,7 +228,7 @@ ___
 
 ▸ **findOrCreateTemplateFile**(`__namedParameters`: object): *Promise‹string›*
 
-*Defined in [src/utils.ts:64](https://github.com/ozum/readmeasy/blob/3095a08/src/utils.ts#L64)*
+*Defined in [src/utils.ts:64](https://github.com/ozum/readmeasy/blob/30fddb9/src/utils.ts#L64)*
 
 Finds or creates README template file and returns the file found or created path.
 
@@ -252,7 +252,7 @@ ___
 
 ▸ **findTemplateFile**(`dir?`: undefined | string): *Promise‹string | undefined›*
 
-*Defined in [src/utils.ts:51](https://github.com/ozum/readmeasy/blob/3095a08/src/utils.ts#L51)*
+*Defined in [src/utils.ts:51](https://github.com/ozum/readmeasy/blob/30fddb9/src/utils.ts#L51)*
 
 Returns README template file by searching given directory for supported template extensions.
 If more than one found, returns first one.
