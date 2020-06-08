@@ -72,7 +72,7 @@
     "doctoc": "^1.4.0",
     "front-matter": "^3.1.0",
     "globby": "^11",
-    "measy": "^0.4.9",
+    "measy": "^0.4.10",
     "meow": "^6",
     "title-case": "^3.0.2",
     "top-pkg-dir": "^0.0.3"
