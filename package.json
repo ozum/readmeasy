@@ -67,7 +67,7 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "badges": "^4.9.0",
+    "badges": "~4.9.0",
     "change-case": "^4.1.1",
     "doctoc": "^1.4.0",
     "front-matter": "^3.2.1",
