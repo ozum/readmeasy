@@ -1,6 +1,6 @@
 import { join } from "path";
-import { readFile, outputFile, existsSync, remove } from "fs-extra";
-import createReadMe, { findOrCreateTemplateFile } from "../src/index";
+import { readFile, outputFile, remove } from "fs-extra";
+import createReadMe, { findOrCreateTemplateFile, findTemplateFile } from "../src/index";
 
 const read = (file: string): Promise<string> => readFile(join(__dirname, "test-helper", file), { encoding: "utf8" });
 const dir = {
@@ -90,5 +90,11 @@ describe("createRadMe()", () => {
 describe("findOrCreateTemplateFile", () => {
   it("should find README template", async () => {
     expect(await findOrCreateTemplateFile({ dir: dir.njk })).toBe(join(dir.njk, "README.njk"));
+  });
+});
+
+describe("findTemplateFile", () => {
+  it("should find README template", async () => {
+    expect(await findTemplateFile(dir.njk)).toBe("README.njk");
   });
 });
